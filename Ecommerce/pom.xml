@@ -9,8 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.babyEKart</groupId>
-	<artifactId>Ecommerce</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>ecommerce</artifactId>
 	<name>Ecommerce</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -27,6 +26,7 @@
 		<url/>
 	</scm>
 	<properties>
+		<docker.image.prefix>app</docker.image.prefix>
 		<java.version>22</java.version>
 	</properties>
 	<dependencies>
@@ -68,6 +68,22 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.0.0</version>
+
+				<configuration>
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
 				</configuration>
 			</plugin>
 		</plugins>
